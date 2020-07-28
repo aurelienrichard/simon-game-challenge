@@ -50,8 +50,7 @@ async function nextSequence() {
   playerTurn = false;
   userClickedPattern = [];
   $('#level-title').text(`Level ${level}`);
-  level++;
-  await sleep(500);
+  await sleep(1000);
   if (gamePattern.length != 0) {
     for (let i = 0; i < gamePattern.length; i++) {
       animatePress($(`#${gamePattern[i]}`));
@@ -64,6 +63,7 @@ async function nextSequence() {
   gamePattern.push(randomChosenColour);
   animatePress($(`#${randomChosenColour}`));
   playSound(randomChosenColour);
+  await sleep(500);
   playerTurn = true;
 }
 
@@ -86,9 +86,8 @@ function animatePress(button) {
 function checkAnswer(index) {
   if (userClickedPattern[index] === gamePattern[index]) {
     if (userClickedPattern.length === gamePattern.length) {
-      setTimeout(function () {
-        nextSequence();
-      }, 1000);
+      level++;
+      nextSequence();
     }
   } else {
     gameOver();
